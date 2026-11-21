@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+message: >-
+  To cite the mathematics, cite the paper (preferred citation below). To cite
+  the formalization itself, cite this repository.
+title: "The speed of biased random walk on leafless Bienaymé trees is monotone: Lean formalization assuming the interval verifications of Appendix A"
+type: software
+authors:
+  - family-names: Kortchemski
+    given-names: Igor
+repository-code: https://github.com/igor-kortchemski/monotonicity-speed-biased-random-walk-palomar
+license: Apache-2.0
+keywords:
+  - Lean 4
+  - Mathlib
+  - formalization
+  - biased random walk
+  - Bienaymé trees
+  - speed
+  - computer-assisted proof
+abstract: >-
+  Lean 4 and Mathlib formalization of Theorem 1.1 of "The speed of biased
+  random walk on leafless Bienaymé trees is monotone" by ChatGPT, directed by
+  Igor Kortchemski (Hexagon 2611.00820), assuming the statements that the two
+  interval verifications of its Appendix A check: the speed of the biased random
+  walk on a leafless Bienaymé tree is C^1 and strictly decreasing on [0, m). Only
+  the axioms propext, Classical.choice and Quot.sound are used. The two
+  statements are proved in the companion repository
+  monotonicity-speed-biased-random-walk. Produced with AI agents; the Lean
+  kernel checks the proofs.
+preferred-citation:
+  type: article
+  authors:
+    - name: "ChatGPT, directed by Igor Kortchemski"
+  title: "The speed of biased random walk on leafless Bienaymé trees is monotone"
+  year: 2026
+  url: "https://hexagonmath.org/2611.00820v1"
+  identifiers:
+    - type: other
+      value: "hexagon:2611.00820v1"
+      description: "Hexagon identifier"
+  notes: "Preprint, Hexagon 2611.00820, November 2026."

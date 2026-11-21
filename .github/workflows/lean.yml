@@ -1,0 +1,29 @@
+name: Lean build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a
+      - uses: leanprover/lean-action@bd5cb0b830eda614ce3fc186d8429b9409b16c47
+        with:
+          build: 'true'
+          use-mathlib-cache: 'true'
+          test: 'false'
+          lint: 'false'
+      - name: Check axioms
+        shell: bash
+        run: |
+          lake env lean scripts/Axioms.lean | tee axioms.txt
+          # Lean wraps long lines: join them before matching the axiom list.
+          n=$(tr '\n' ' ' < axioms.txt | grep -o 'depends on axioms: \[[^]]*\]' | tr -d ' ' \
+            | grep -c -x 'dependsonaxioms:\[propext,Classical.choice,Quot.sound\]')
+          test "$n" = 1

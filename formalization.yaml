@@ -1,0 +1,153 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml v0.4 (template of PalomarRegistry/PalomarTemplate).
+version: "v0.4"
+
+project:
+  name: "The speed of biased random walk on leafless Bienaymé trees is monotone"
+  description: >-
+    Conditional on the two interval verifications of Appendix A, this Lean 4 and
+    Mathlib formalization proves Theorem 1.1 of the paper. For every offspring
+    law with no mass at zero and mean 1 < m < ∞, the speed v of the λ-biased
+    random walk on the Bienaymé tree, constructed as the almost-sure limit of
+    |X_n|/n, is positive and C^1 on [0, m) and strictly decreasing there, with
+    v'(λ) < 0 for 0 < λ < m and right derivative -2 E[1/ν] at 0. The hypotheses
+    are the closed propositions CertACovers and CertBCovers that the interval
+    verifications of Lemmas A.1 and A.2 check, over all feasible normalized
+    data; the proof derives the two lemmas from them at the actual law. The two
+    propositions are proved in a companion repository, not in this one.
+  authors:
+    - "Igor Kortchemski"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Igor Kortchemski"
+
+classification:
+  arxiv: ["math.PR"]
+  msc2020: ["60K37", "60J80"]
+
+sources:
+  - title: "The speed of biased random walk on leafless Bienaymé trees is monotone"
+    authors:
+      - "ChatGPT, directed by Igor Kortchemski"
+    id: "hexagon:2611.00820v1"
+    type: "paper"
+    location: "https://hexagonmath.org/2611.00820v1"
+    relationship: "formalizes"
+    note: >-
+      Theorem 1.1 is formalized assuming the statements that the interval
+      verifications of Lemmas A.1 and A.2 (Appendix A) check. The paper's
+      programs perform these verifications in outward-rounded floating-point
+      arithmetic; the companion repository performs them in Lean.
+    license: "CC-BY-4.0"
+    author_endorsement: "participated"
+
+related_formalizations:
+  - id: "https://github.com/igor-kortchemski/monotonicity-speed-biased-random-walk"
+    relationship: "adapts"
+    note: >-
+      The companion repository proves Theorem 1.1 without hypotheses: the Lean
+      kernel also checks the two interval verifications in exact arithmetic
+      (about 620 CPU-hours), over 41,919 boxes for Lemma A.1, and 8,185
+      rectangles with 2,089,525 numerical, 12,634 analytic and 3,532 excluded
+      leaves for Lemma A.2. This repository is an extract of
+      its commit c561a03 without the certificate modules, with the development's
+      namespace renamed from LPPMonotonicityDraft to LPPMonotonicityProof, and the
+      definitions of the two propositions moved next to the model, and the
+      main theorem named speed_monotone_of_interval_certificates.
+  - id: "https://github.com/igor-kortchemski/random-trees-lean"
+    relationship: "adapts"
+    note: >-
+      Seventeen modules on plane trees and locally finite trees are copied at
+      commit ec59954 under new module paths and namespaces (Apache-2.0); see
+      THIRD_PARTY_NOTICES.md.
+
+status:
+  scope: >-
+    Theorem 1.1 is proved, with the positivity of the speed on [0, m) added to
+    its conclusion, assuming the closed propositions CertACovers and
+    CertBCovers that the interval verifications of Lemmas A.1 and A.2 check.
+    The proof derives the two lemmas from them at the actual law. The interval
+    verifications themselves are not in this repository. The other numbered
+    results of the paper enter the proof but are not stated separately as
+    compared declarations. The proof of Theorem 3.7 includes an exact rational
+    check of twelve coefficients by the Lean kernel. Challenge.lean states the
+    compared result with sorry; no other file contains sorry.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["claude-opus-5-5", "claude-sonnet-5-5", "kimi-k3.1-pro", "gpt-6.2-sol", "gpt-6.2-astra", "gpt-6-luna"]
+      framework: "Claude Code coordinator with Codex and Open Math OS workers"
+      tool_setup: >-
+        Lean 4.35.0 and Mathlib v4.35.0, the lean-autoformalization skills, a
+        Claude Code coordinator (Claude Opus 5.5) with background workers writing
+        the Lean, and independent agent reviews of the statements.
+      cost:
+        wall_time: "about 18.5 hours for the full formalization, certificates included"
+        spend_usd: "subscription-based; not tracked separately"
+        hardware: "a desktop computer; the companion repository's certificates used rented servers"
+      prompting_notes: >-
+        Formalize the paper's main theorem first, preserving hypotheses,
+        quantifiers and boundary cases, with no native evaluation and no
+        assumed hypothesis beyond those of the paper.
+  spend_usd: "subscription-based; not tracked separately"
+  notes: >-
+    The code and documentation were generated by AI agents and checked by the
+    Lean kernel. Agent reviews are not human peer review, and no human has
+    reviewed the proofs line by line.
+
+fidelity:
+  divergences: >-
+    The speed is defined from the model and shown to be the almost-sure limit
+    of |X_n|/n; its positivity on [0, m) is added to the conclusion. The
+    hypotheses are not Lemmas A.1 and A.2 themselves, which give signs at the
+    actual transient biases, but the statements that their interval
+    verifications check: they quantify over all feasible data in the paper's
+    normalized coordinates (x, a, t, w and the normalized moments for A.1; x,
+    a, the law of 1 - W and the speed bound r for A.2), not only over the data
+    of actual offspring laws. Their domains record the analytic facts that the
+    paper's programs use,
+    for instance S - γT ≥ aS/(2λ) and G_n ≥ 0 for Lemma A.1, and the proof of
+    Theorem 1.1 establishes them for the actual laws. Some proofs take different
+    routes from the paper, for instance in the identification of the speed.
+
+review:
+  status: "agent-reviewed statement; proofs kernel-checked; not human-reviewed"
+  reviewers:
+    - "independent AI review agents (Claude and GPT models)"
+  notes: >-
+    Before the proof work, the statement of Theorem 1.1 was compared with the
+    paper by two models and translated back into mathematical language by a
+    separate check. Comparator with NanoDa runs in CI on every push.
+
+alignment:
+  namespace: "LPPMonotonicity"
+  statements:
+    - source: "Theorem 1.1, assuming the interval verifications of Lemmas A.1 and A.2"
+      lean: "LPPMonotonicity.speed_monotone_of_interval_certificates"
+      module: "LPPMonotonicity.Statements.Conditional"
+      status: "proved, assuming CertACovers and CertBCovers"
+      note: "The positivity of the speed on [0, m) is part of the conclusion."
+    - source: "Lemma A.1 (lem:large-finite): the statement its interval verification checks"
+      lean: "LPPMonotonicityProof.Analytic.CertACovers"
+      module: "LPPMonotonicity.Model.Defs"
+      status: "hypothesis"
+      note: >-
+        Positivity of the retained lower bound for all normalized data in the
+        domain; the proof derives Lemma A.1 from it at the actual law. Proved in
+        the companion repository.
+    - source: "Lemma A.2 (lem:joint-finite): the statement its interval verification checks"
+      lean: "LPPMonotonicityProof.Analytic.CertBCovers"
+      module: "LPPMonotonicity.Model.Defs"
+      status: "hypothesis"
+      note: >-
+        Every feasible law and speed ratio passes one of the four exits; the
+        proof derives Lemma A.2 from it at the actual law. Proved in the
+        companion repository.
+
+acknowledgements: >-
+  Lean, Mathlib, and random-trees-lean, whose modules are credited in
+  THIRD_PARTY_NOTICES.md.
